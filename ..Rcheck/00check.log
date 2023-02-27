@@ -1,0 +1,139 @@
+* using log directory ‘/home/trb5me_admin/pfr/..Rcheck’
+* using R version 4.2.1 (2022-06-23)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘./DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘pfr’ version ‘1.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... WARNING
+Subdirectory ‘pfr/src’ contains apparent object files/libraries
+  RcppExports.o pfr.so svol_leverage.o svol_leverage_export.o
+Object files/libraries should not be included in a source package.
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .gitmodules
+  src/.Rhistory
+  src/pf/.git
+  src/pf/.gitignore
+  src/pf/include/pf/.Rhistory
+  ..Rcheck
+  .git
+  src/pf/.github
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+* checking for portable file names ... WARNING
+Found the following files with non-portable file names:
+  src/pf/docs/html/functions_func_~.html
+  src/pf/docs/html/functions_~.html
+These are not fully portable file names.
+See section ‘Package structure’ in the ‘Writing R Extensions’ manual.
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘pfr’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: pfr-package.Rd:27: All text must be in a section
+  Warning: pfr-package.Rd:28: All text must be in a section
+See ‘/home/trb5me_admin/pfr/..Rcheck/00install.out’ for details.
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Malformed Description field: should contain one or more complete sentences.
+Non-standard license specification:
+  What license is it under?
+Standardizable: FALSE
+Checking should be performed on sources prepared by ‘R CMD build’.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... WARNING
+Found directory ‘R’ with no source files.
+Found the following directory with the name of a check directory:
+  ./..Rcheck
+Most likely, these were included erroneously.
+Found the following CITATION file in a non-standard place:
+  src/pf/CITATION.cff
+Most likely ‘inst/CITATION’ should be used instead.
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... NOTE
+Error in tools:::.check_packages_used(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+* checking S3 generic/method consistency ... WARNING
+Error in tools::checkS3methods(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+See section ‘Generic functions and methods’ in the ‘Writing R
+Extensions’ manual.
+* checking replacement functions ... WARNING
+Error in tools::checkReplaceFuns(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+The argument of a replacement function which corresponds to the right
+hand side must be named ‘value’.
+* checking foreign function calls ... NOTE
+Error in tools::checkFF(package = "pfr", registration = FALSE, check_DUP = TRUE) : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+See chapter ‘System and foreign language interfaces’ in the ‘Writing R
+Extensions’ manual.
+* checking R code for possible problems ... OK
+* checking Rd files ... WARNING
+prepare_Rd: pfr-package.Rd:27: All text must be in a section
+prepare_Rd: pfr-package.Rd:28: All text must be in a section
+* checking Rd metadata ... OK
+* checking Rd cross-references ... NOTE
+Unknown package ‘<pkg>’ in Rd xrefs
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... WARNING
+Error in tools::codoc(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+Error in tools::codocClasses(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+* checking Rd \usage sections ... NOTE
+Error in tools::checkDocStyle(package = "pfr") : 
+  directory '/home/trb5me_admin/pfr/..Rcheck/pfr' does not contain R code
+Execution halted
+The \usage entries for S3 methods should use the \method markup and not
+their full name.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... ERROR
+Warning: parse error in file 'pfr-Ex.R':
+21:11: unexpected symbol
+20: 
+21: ~~ simple examples
+              ^
+** will not attempt to run examples
+* checking line endings in C/C++/Fortran sources/headers ... NOTE
+Found the following sources/headers not terminated with a newline:
+  src/svol_leverage_export.cpp
+Some compilers warn on such files.
+* checking line endings in Makefiles ... OK
+* checking compilation flags in Makevars ... OK
+* checking for GNU extensions in Makefiles ... WARNING
+Found the following file(s) containing GNU extensions:
+  src/pf/examples/build/Makefile
+Portable Makefiles do not use GNU extensions such as +=, :=, $(shell),
+$(wildcard), ifeq ... endif, .NOTPARALLEL See section ‘Writing portable
+packages’ in the ‘Writing R Extensions’ manual.
+* checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... OK
+* checking use of PKG_*FLAGS in Makefiles ... OK
+* checking include directives in Makefiles ... OK
+* checking compiled code ... OK
+* checking examples ... SKIPPED
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 9 WARNINGs, 7 NOTEs

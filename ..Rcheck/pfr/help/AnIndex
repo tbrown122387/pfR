@@ -1,0 +1,6 @@
+pfr-package	pfr-package
+pfr	pfr-package
+rcppeigen_bothproducts	rcppeigen_hello_world
+rcppeigen_hello_world	rcppeigen_hello_world
+rcppeigen_innerproduct	rcppeigen_hello_world
+rcppeigen_outerproduct	rcppeigen_hello_world

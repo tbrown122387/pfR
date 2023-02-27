@@ -1,0 +1,7 @@
+useDynLib(pfr, .registration = TRUE)
+import(Rcpp)
+import(RcppEigen)
+importFrom(Rcpp, evalCpp)
+import(methods)
+exportPattern("^[[:alpha:]]+")
+export(svol_leverage)
