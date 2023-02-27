@@ -15,19 +15,7 @@ RCPP_MODULE(svol_leverage_module){
   .factory<FLOATTYPE,FLOATTYPE,FLOATTYPE,FLOATTYPE>(newSvolLeverage)
   .method("getLogCondLike", &BasePF::getLogCondLike);
   
-  // 
-  // Rcpp::class_<>("BasePF")
-  // .method("getLogCondLike", &BSFilterWC<nparts_svol_lev, dimstate, dimobs, dimobs, resampT, FLOATTYPE>::getLogCondLike);
-  //.default_constructor()
-  
-  //.constructor<const unsigned int &>()
-  
-//  .field("x", &Base::x) 
-
-  // Rcpp::class_<svol_leverage>("svol_leverage")
-  // .derives<BSFilterWC<nparts_svol_lev, dimstate, dimobs, dimobs, resampT, FLOATTYPE>>("BasePF")
-  // .constructor<FLOATTYPE, FLOATTYPE, FLOATTYPE, FLOATTYPE>();
-  // .method("lol", &svol_leverage::lol)
-  // .method("lastLogCondLike", &svol_leverage::lastLogCondLike); 
-  //.method("getLogCondLike", &svol_leverage::getLogCondLike);
+  Rcpp::class_<svol_leverage>("svol_leverage")
+  .derives<BasePF>("BasePF")
+  .method("update", &svol_leverage::update);
 }

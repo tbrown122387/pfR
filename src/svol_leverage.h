@@ -15,12 +15,15 @@ using namespace pf::resamplers;
 #define dimobs 1
 #define dimparam 4
 #define FLOATTYPE double
-using resampT = mn_resamp_fast1<nparts_svol_lev,dimstate,FLOATTYPE>;
 
 // helper type aliases
-using state_vector  = Eigen::Matrix<FLOATTYPE,dimstate,1>;
-using obs_vector  = Eigen::Matrix<FLOATTYPE,dimobs,1>;
-using param_vector  = Eigen::Matrix<FLOATTYPE,dimparam,1>;
+using resampT = mn_resamp_fast1<nparts_svol_lev,dimstate,FLOATTYPE>;
+using vec  = Eigen::Matrix<FLOATTYPE,dimstate,1>;
+using vec  = Eigen::Matrix<FLOATTYPE,dimobs,1>;
+using param_vec = Eigen::Matrix<FLOATTYPE,dimparam,1>;
+using DynMat = Eigen::Matrix<FLOATTYPE,Eigen::Dynamic,Eigen::Dynamic>;
+using func = std::function<const DynMat(const vec&, const vec&)>;
+
 
 /**
  * @brief a particle filter class template for a Hull-White stochastic volatility model
@@ -34,24 +37,31 @@ private:
   FLOATTYPE m_mu;
   FLOATTYPE m_sigma;
   FLOATTYPE m_rho;
-  param_vector m_untrans_params;
+  param_vec m_untrans_params;
 
   // use this for sampling
   rvsamp::UnivNormSampler<FLOATTYPE> m_stdNormSampler; 
   
   // required by bootstrap filter base class
-  FLOATTYPE logQ1Ev(const state_vector &x1, const obs_vector &y1, const obs_vector &z1);
-  FLOATTYPE logMuEv(const state_vector &x1, const obs_vector &z1);
-  FLOATTYPE logGEv(const obs_vector &yt, const state_vector &xt, const obs_vector& zt);
-  auto stateTransSamp(const state_vector &xtm1, const obs_vector& zt) -> state_vector;
-  auto q1Samp(const obs_vector &y1, const obs_vector& z1) -> state_vector;
-  auto fSamp(const state_vector &xtm1, const obs_vector &ytm1) -> state_vector;
-
+  FLOATTYPE logQ1Ev(const vec &x1, const vec &y1, const vec &z1);
+  FLOATTYPE logMuEv(const vec &x1, const vec &z1);
+  FLOATTYPE logGEv(const vec &yt, const vec &xt, const vec& zt);
+  auto stateTransSamp(const vec &xtm1, const vec& zt) -> vec;
+  auto q1Samp(const vec &y1, const vec& z1) -> vec;
+  auto fSamp(const vec &xtm1, const vec &ytm1) -> vec;
+  
+  // what function of states you want to filter with
+  std::vector<func> m_fs;
+  
+  
 // methods that are exposable in R  
 public:
 
   // constructor
-  svol_leverage(const FLOATTYPE &phi, const FLOATTYPE &mu, const FLOATTYPE &sigma, const FLOATTYPE& rho);
+  svol_leverage(FLOATTYPE phi, FLOATTYPE mu, FLOATTYPE sigma, FLOATTYPE rho);
+  
+  // filter
+  void update(FLOATTYPE current_obs, FLOATTYPE lagged_obs);
 
 };
 
