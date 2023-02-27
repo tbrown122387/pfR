@@ -59,8 +59,3 @@ FLOATTYPE svol_leverage::logQ1Ev(const state_vector &x1, const obs_vector &y1, c
 }
 
 
-FLOATTYPE svol_leverage::lastLogCondLike()
-{
-  return getLogCondLike();
-}
-

@@ -14,7 +14,7 @@ using namespace pf::resamplers;
 #define dimstate 1
 #define dimobs 1
 #define dimparam 4
-using FLOATTYPE = double;
+#define FLOATTYPE double
 using resampT = mn_resamp_fast1<nparts_svol_lev,dimstate,FLOATTYPE>;
 
 // helper type aliases
@@ -52,10 +52,7 @@ public:
 
   // constructor
   svol_leverage(const FLOATTYPE &phi, const FLOATTYPE &mu, const FLOATTYPE &sigma, const FLOATTYPE& rho);
-  
-  // wrapper to return log p(y_t | y_{1:t-1})
-  FLOATTYPE lastLogCondLike();
-  
+
 };
 
 #endif //SVOL_LEVERAGE_MOD_H
