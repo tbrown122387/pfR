@@ -5,7 +5,6 @@
 RCPP_MODULE(svol_leverage_module){
   Rcpp::class_<svol_leverage>("svol_leverage")
   .constructor<FLOATTYPE, FLOATTYPE, FLOATTYPE, FLOATTYPE>()
-  .method("getLogCondLike", &svol_leverage::getLogCondLike);
-  //.method("lastLogCondLike", &svol_leverage::lastLogCondLike); 
-
+  .method("lastLogCondLike", &svol_leverage::lastLogCondLike); 
+  //.method("getLogCondLike", &svol_leverage::getLogCondLike);
 }

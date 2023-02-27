@@ -53,8 +53,8 @@ public:
   // constructor
   svol_leverage(const FLOATTYPE &phi, const FLOATTYPE &mu, const FLOATTYPE &sigma, const FLOATTYPE& rho);
   
-  // // wrapper to return log p(y_t | y_{1:t-1})
-  // FLOATTYPE lastLogCondLike();
+  // wrapper to return log p(y_t | y_{1:t-1})
+  FLOATTYPE lastLogCondLike();
   
 };
 
