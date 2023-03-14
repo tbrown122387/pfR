@@ -11,41 +11,38 @@ using namespace pf::filters;
 using namespace pf::resamplers;
 
 #define nparts_svol_lev 500
-#define dimstate 1
-#define dimobs 1
+#define dimboth 1 // dimension of both state vector and observation vectors
 #define dimparam 4
-#define FLOATTYPE double
 
 // helper type aliases
-using resampT = mn_resamp_fast1<nparts_svol_lev,dimstate,FLOATTYPE>;
-using vec  = Eigen::Matrix<FLOATTYPE,dimstate,1>;
-using vec  = Eigen::Matrix<FLOATTYPE,dimobs,1>;
-using param_vec = Eigen::Matrix<FLOATTYPE,dimparam,1>;
-using DynMat = Eigen::Matrix<FLOATTYPE,Eigen::Dynamic,Eigen::Dynamic>;
+using resampT = mn_resamp_fast1<nparts_svol_lev,dimboth,double>;
+using vec  = Eigen::Matrix<double,dimboth,1>;
+using param_vec = Eigen::Matrix<double,dimparam,1>;
+using DynMat = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic>;
 using func = std::function<const DynMat(const vec&, const vec&)>;
-
+using BasePF = BSFilterWC<nparts_svol_lev, dimboth, dimboth, dimboth, resampT, double>;
 
 /**
  * @brief a particle filter class template for a Hull-White stochastic volatility model
  *
  */
-class svol_leverage : public BSFilterWC<nparts_svol_lev, dimstate, dimobs, dimobs, resampT, FLOATTYPE>
+class svol_leverage : public BasePF
 {
 private:
   // parameters
-  FLOATTYPE m_phi;
-  FLOATTYPE m_mu;
-  FLOATTYPE m_sigma;
-  FLOATTYPE m_rho;
+  double m_phi;
+  double m_mu;
+  double m_sigma;
+  double m_rho;
   param_vec m_untrans_params;
 
   // use this for sampling
-  rvsamp::UnivNormSampler<FLOATTYPE> m_stdNormSampler; 
+  rvsamp::UnivNormSampler<double> m_stdNormSampler; 
   
   // required by bootstrap filter base class
-  FLOATTYPE logQ1Ev(const vec &x1, const vec &y1, const vec &z1);
-  FLOATTYPE logMuEv(const vec &x1, const vec &z1);
-  FLOATTYPE logGEv(const vec &yt, const vec &xt, const vec& zt);
+  double logQ1Ev(const vec &x1, const vec &y1, const vec &z1);
+  double logMuEv(const vec &x1, const vec &z1);
+  double logGEv(const vec &yt, const vec &xt, const vec& zt);
   auto stateTransSamp(const vec &xtm1, const vec& zt) -> vec;
   auto q1Samp(const vec &y1, const vec& z1) -> vec;
   auto fSamp(const vec &xtm1, const vec &ytm1) -> vec;
@@ -58,10 +55,10 @@ private:
 public:
 
   // constructor
-  svol_leverage(FLOATTYPE phi, FLOATTYPE mu, FLOATTYPE sigma, FLOATTYPE rho);
+  svol_leverage(double phi, double mu, double sigma, double rho);
   
-  // filter
-  void update(FLOATTYPE current_obs, FLOATTYPE lagged_obs);
+  // // filter
+  // void update(double current_obs, double lagged_obs);
 
 };
 
