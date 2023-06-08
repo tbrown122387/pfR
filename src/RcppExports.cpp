@@ -11,34 +11,34 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// svol_leverage_approx_LL
-double svol_leverage_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params);
-RcppExport SEXP _pfr_svol_leverage_approx_LL(SEXP obsTSSEXP, SEXP paramsSEXP) {
+// svol_leverage_bswc_approx_LL
+double svol_leverage_bswc_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params);
+RcppExport SEXP _pfr_svol_leverage_bswc_approx_LL(SEXP obsTSSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type obsTS(obsTSSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
-    rcpp_result_gen = Rcpp::wrap(svol_leverage_approx_LL(obsTS, params));
+    rcpp_result_gen = Rcpp::wrap(svol_leverage_bswc_approx_LL(obsTS, params));
     return rcpp_result_gen;
 END_RCPP
 }
-// svol_leverage_approx_filt
-Rcpp::NumericVector svol_leverage_approx_filt(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params);
-RcppExport SEXP _pfr_svol_leverage_approx_filt(SEXP obsTSSEXP, SEXP paramsSEXP) {
+// svol_leverage_bswc_approx_filt
+Rcpp::NumericVector svol_leverage_bswc_approx_filt(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params);
+RcppExport SEXP _pfr_svol_leverage_bswc_approx_filt(SEXP obsTSSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type obsTS(obsTSSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
-    rcpp_result_gen = Rcpp::wrap(svol_leverage_approx_filt(obsTS, params));
+    rcpp_result_gen = Rcpp::wrap(svol_leverage_bswc_approx_filt(obsTS, params));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_pfr_svol_leverage_approx_LL", (DL_FUNC) &_pfr_svol_leverage_approx_LL, 2},
-    {"_pfr_svol_leverage_approx_filt", (DL_FUNC) &_pfr_svol_leverage_approx_filt, 2},
+    {"_pfr_svol_leverage_bswc_approx_LL", (DL_FUNC) &_pfr_svol_leverage_bswc_approx_LL, 2},
+    {"_pfr_svol_leverage_bswc_approx_filt", (DL_FUNC) &_pfr_svol_leverage_bswc_approx_filt, 2},
     {NULL, NULL, 0}
 };
 
