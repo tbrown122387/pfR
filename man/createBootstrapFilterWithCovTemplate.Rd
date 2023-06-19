@@ -2,7 +2,7 @@
 % Please edit documentation in R/template_creators.R
 \name{createBootstrapFilterWithCovTemplate}
 \alias{createBootstrapFilterWithCovTemplate}
-\title{Create file templates for a bootstrap filter model (with covariates).}
+\title{Create file templates for a bootstrap filter model with covariates.}
 \usage{
 createBootstrapFilterWithCovTemplate(modname, saveFile = TRUE, fileDir = NULL)
 }

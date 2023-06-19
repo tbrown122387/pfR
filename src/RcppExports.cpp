@@ -11,6 +11,30 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// mean_factor_msvol_aux_approx_LL
+double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const Rcpp::NumericVector& params);
+RcppExport SEXP _pfr_mean_factor_msvol_aux_approx_LL(SEXP obsTSSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type obsTS(obsTSSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(mean_factor_msvol_aux_approx_LL(obsTS, params));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mean_factor_msvol_aux_approx_filt
+Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(const Rcpp::NumericMatrix& obsTS, const Rcpp::NumericVector& params);
+RcppExport SEXP _pfr_mean_factor_msvol_aux_approx_filt(SEXP obsTSSEXP, SEXP paramsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type obsTS(obsTSSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
+    rcpp_result_gen = Rcpp::wrap(mean_factor_msvol_aux_approx_filt(obsTS, params));
+    return rcpp_result_gen;
+END_RCPP
+}
 // svol_leverage_bswc_approx_LL
 double svol_leverage_bswc_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params);
 RcppExport SEXP _pfr_svol_leverage_bswc_approx_LL(SEXP obsTSSEXP, SEXP paramsSEXP) {
@@ -37,6 +61,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_pfr_mean_factor_msvol_aux_approx_LL", (DL_FUNC) &_pfr_mean_factor_msvol_aux_approx_LL, 2},
+    {"_pfr_mean_factor_msvol_aux_approx_filt", (DL_FUNC) &_pfr_mean_factor_msvol_aux_approx_filt, 2},
     {"_pfr_svol_leverage_bswc_approx_LL", (DL_FUNC) &_pfr_svol_leverage_bswc_approx_LL, 2},
     {"_pfr_svol_leverage_bswc_approx_filt", (DL_FUNC) &_pfr_svol_leverage_bswc_approx_filt, 2},
     {NULL, NULL, 0}

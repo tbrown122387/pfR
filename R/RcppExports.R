@@ -5,8 +5,24 @@
 #' @import RcppEigen
 #' @importFrom Rcpp evalCpp
 #' @export
+mean_factor_msvol_aux_approx_LL <- function(obsTS, params) {
+    .Call(`_pfr_mean_factor_msvol_aux_approx_LL`, obsTS, params)
+}
+
+#' @useDynLib pfr, .registration = TRUE
+#' @import RcppEigen
+#' @importFrom Rcpp evalCpp
+#' @export
+mean_factor_msvol_aux_approx_filt <- function(obsTS, params) {
+    .Call(`_pfr_mean_factor_msvol_aux_approx_filt`, obsTS, params)
+}
+
+#' @useDynLib pfr, .registration = TRUE
+#' @import RcppEigen
+#' @importFrom Rcpp evalCpp
+#' @export
 svol_leverage_bswc_approx_LL <- function(obsTS, params) {
-    .Call('_pfr_svol_leverage_bswc_approx_LL', PACKAGE = 'pfr', obsTS, params)
+    .Call(`_pfr_svol_leverage_bswc_approx_LL`, obsTS, params)
 }
 
 #' @useDynLib pfr, .registration = TRUE
@@ -14,6 +30,6 @@ svol_leverage_bswc_approx_LL <- function(obsTS, params) {
 #' @importFrom Rcpp evalCpp
 #' @export
 svol_leverage_bswc_approx_filt <- function(obsTS, params) {
-    .Call('_pfr_svol_leverage_bswc_approx_filt', PACKAGE = 'pfr', obsTS, params)
+    .Call(`_pfr_svol_leverage_bswc_approx_filt`, obsTS, params)
 }
 

@@ -21,17 +21,15 @@ using namespace pf::resamplers;
 #define nparts_MODNAME <TODO>    // number of particles
 #define dimstate_MODNAME <TODO>  // dimension of state vectors
 #define dimobs_MODNAME <TODO>    // dimension of observation vectors
-#define dimcov_MODNAME <TODO>    // dimension of covariate vectors
 #define dimparam_MODNAME <TODO>  // dimension of parameters
 
 // helper type aliases
 using resampT   = mn_resamp_fast1<nparts_MODNAME,dimstate_MODNAME,double>;
 using svec      = Eigen::Matrix  <double, dimstate_MODNAME,1>;
 using ovec      = Eigen::Matrix  <double, dimobs_MODNAME,1>;
-using cvec      = Eigen::Matrix  <double, dimcov_MODNAME,1>;
 using param_vec = Eigen::Matrix  <double, dimparam_MODNAME,1>;
 using DynMat    = Eigen::Matrix  <double, Eigen::Dynamic, Eigen::Dynamic>;
-using func      = std::function  <const DynMat(const svec&, const cvec&)>;
+using func      = std::function  <const DynMat(const svec&)>;
 using BasePF    = APF		  <nparts_MODNAME,dimstate_MODNAME,dimobs_MODNAME,resampT,double>;
 
 
