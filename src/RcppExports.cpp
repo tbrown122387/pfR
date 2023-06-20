@@ -12,25 +12,25 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // mean_factor_msvol_aux_approx_LL
-double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const Rcpp::NumericVector& params);
+double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const Eigen::VectorXd& params);
 RcppExport SEXP _pfr_mean_factor_msvol_aux_approx_LL(SEXP obsTSSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type obsTS(obsTSSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type params(paramsSEXP);
     rcpp_result_gen = Rcpp::wrap(mean_factor_msvol_aux_approx_LL(obsTS, params));
     return rcpp_result_gen;
 END_RCPP
 }
 // mean_factor_msvol_aux_approx_filt
-Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(const Rcpp::NumericMatrix& obsTS, const Rcpp::NumericVector& params);
+Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(const Rcpp::NumericMatrix& obsTS, const Eigen::VectorXd& params);
 RcppExport SEXP _pfr_mean_factor_msvol_aux_approx_filt(SEXP obsTSSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type obsTS(obsTSSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type params(paramsSEXP);
+    Rcpp::traits::input_parameter< const Eigen::VectorXd& >::type params(paramsSEXP);
     rcpp_result_gen = Rcpp::wrap(mean_factor_msvol_aux_approx_filt(obsTS, params));
     return rcpp_result_gen;
 END_RCPP

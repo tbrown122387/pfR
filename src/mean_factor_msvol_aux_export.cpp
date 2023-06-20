@@ -7,11 +7,11 @@
 //' @importFrom Rcpp evalCpp
 //' @export
 // [[Rcpp::export]]
-double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const Rcpp::NumericVector& params){
+double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const Eigen::VectorXd& params){
 
   // instantiate model with arg params
-  std::vector<double> p = Rcpp::as<std::vector<double> >(params);
-  Mean_factor_msvolAUX mod(p);
+  // std::vector<double> p = Rcpp::as<std::vector<double> >(params);
+  Mean_factor_msvolAUX mod(params);
 
   // calculate likelihood by iterating through time series
   double ans(0.0);
@@ -32,11 +32,11 @@ double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const R
 // [[Rcpp::export]]
 Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(
     const Rcpp::NumericMatrix& obsTS,
-    const Rcpp::NumericVector& params){
+    const Eigen::VectorXd& params){
   
   // instantiate model with arg params
-  std::vector<double> p = Rcpp::as<std::vector<double> >(params);
-  Mean_factor_msvolAUX mod(p);
+  // std::vector<double> p = Rcpp::as<std::vector<double> >(params);
+  Mean_factor_msvolAUX mod(params);
 
   // instantiate container for filter means
   Rcpp::NumericVector ans(obsTS.rows());

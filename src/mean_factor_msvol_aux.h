@@ -1,5 +1,3 @@
-// replace every instance of <TODO> with your own code! 
-
 #ifndef MEAN_FACTOR_MSVOL_AUX_H
 #define MEAN_FACTOR_MSVOL_AUX_H
 
@@ -43,16 +41,22 @@ class Mean_factor_msvolAUX : public BasePF
 private:
 
   // param order: B, mu, Phi, Sigma
-  param_vec m_params;
+  loadMat  m_B;
+  svec     m_Mu;
+  stateMat m_Phi;
+  stateMat m_Sigma;
+  stateMat m_initVar;
+//  param_vec m_params;
 
   // use this for sampling
-  rvsamp::MVNSampler<dimstate_MEAN_FACTOR_MSVOL_AUX,double> m_mvnSampler; 
+  rvsamp::MVNSampler<dimstate_MEAN_FACTOR_MSVOL_AUX,double> m_timeOneSampler;
+  rvsamp::MVNSampler<dimstate_MEAN_FACTOR_MSVOL_AUX,double> m_transitionSampler;
   
   // helper functions to shape parameters
-  auto getB() -> loadMat;
-  auto getMu() -> svec;
-  auto getPhi() -> stateMat;
-  auto getSigma() -> stateMat;
+  auto getB    (const param_vec& theta) -> loadMat;
+  auto getMu   (const param_vec& theta) -> svec;
+  auto getPhi  (const param_vec& theta) -> stateMat;
+  auto getSigma(const param_vec& theta) -> stateMat;
   
   // required by algorithm and required to define your model
   double logMuEv (const svec &x1                )        ;
@@ -62,12 +66,11 @@ private:
   double logQ1Ev (const svec &x1, const ovec &y1)        ;
   double logGEv  (const ovec &yt, const svec &xt)        ;
   
-
   
 public:
 
   // constructor
-  Mean_factor_msvolAUX(std::vector<double> params);
+  Mean_factor_msvolAUX(const param_vec& params);
   
 };
 
