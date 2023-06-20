@@ -11,7 +11,7 @@ Either clone this repository, or type the following into R:
 devtools::install_github("tbrown122387/pfr")
 ```
 
-## Step 2:
+## Step 2: Auto-generate code
 
 Pick your particle filter, generate C++ code templates using one of the following, then fill in the rest:
 
@@ -20,11 +20,12 @@ pfr::createAuxiliaryFilterTemplate("my_model")
 pfr::createBootstrapFilterWithCovTemplate("my_model")
 ```
 
-Watch a live demonstration here:
+Doubting your C++ skills? Check out the full examples [here](src/) or watch this live demonstration:
+
+https://github.com/tbrown122387/pfR/assets/1740324/99447477-5ca1-4e1e-9dba-7417133aa932
 
 
-
-## Step 3:
+## Step 3: Compile and Load
 
 Recompile your C++ code by hitting <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> or typing
 
@@ -32,13 +33,13 @@ Recompile your C++ code by hitting <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</
 devtools::load_all(".")
 ```
 
-## Step 4:
+## Step 4: Run
 
-Run your approximate log-likelihood or filtering functions by typing something like 
+Run your approximate log-likelihood and/or filtering functions by typing something like 
 
 ```
 pfr::my_model_bswc_approx_filt()
 pfr::my_model_bswc_approx_LL()
 ```
 
-
+The name of these functions will depend on what you named your model/algorithm.
