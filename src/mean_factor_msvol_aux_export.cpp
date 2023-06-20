@@ -30,7 +30,7 @@ double mean_factor_msvol_aux_approx_LL(const Rcpp::NumericMatrix& obsTS, const E
 //' @importFrom Rcpp evalCpp
 //' @export
 // [[Rcpp::export]]
-Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(
+Eigen::MatrixXd mean_factor_msvol_aux_approx_filt(
     const Rcpp::NumericMatrix& obsTS,
     const Eigen::VectorXd& params){
   
@@ -39,7 +39,7 @@ Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(
   Mean_factor_msvolAUX mod(params);
 
   // instantiate container for filter means
-  Rcpp::NumericVector ans(obsTS.rows());
+  Eigen::MatrixXd ans(obsTS.rows(), dimstate_MEAN_FACTOR_MSVOL_AUX);
 
   // create a function to evaluate on particle samples
   std::vector<func> pf_fs;
@@ -47,10 +47,10 @@ Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(
 
   // iterate through data and save filter means
   ovec yt;
-  for (int i = 0; i < obsTS.length(); i++){
+  for (int i = 0; i < obsTS.rows(); i++){
     yt << obsTS(i,0), obsTS(i,1);
     mod.filter(yt, pf_fs);
-    ans[i] = mod.getExpectations()[0](0,0);
+    ans.row(i) = mod.getExpectations()[0].col(0).transpose();
   }
   return ans;
 }

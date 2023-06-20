@@ -24,7 +24,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // mean_factor_msvol_aux_approx_filt
-Rcpp::NumericVector mean_factor_msvol_aux_approx_filt(const Rcpp::NumericMatrix& obsTS, const Eigen::VectorXd& params);
+Eigen::MatrixXd mean_factor_msvol_aux_approx_filt(const Rcpp::NumericMatrix& obsTS, const Eigen::VectorXd& params);
 RcppExport SEXP _pfr_mean_factor_msvol_aux_approx_filt(SEXP obsTSSEXP, SEXP paramsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

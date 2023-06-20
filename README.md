@@ -38,8 +38,8 @@ devtools::load_all(".")
 Run your approximate log-likelihood and/or filtering functions by typing something like 
 
 ```
-pfr::my_model_bswc_approx_filt()
-pfr::my_model_bswc_approx_LL()
+pfr::my_model_bswc_approx_filt(myData, myParams)
+pfr::my_model_bswc_approx_LL(myData, myParams)
 ```
 
 The name of these functions will depend on what you named your model/algorithm.
