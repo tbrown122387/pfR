@@ -26,7 +26,7 @@ using cvec      = Eigen::Matrix  <double, dimcov_SVOL_LEVERAGE_BSWC,1>;
 using param_vec = Eigen::Matrix  <double, dimparam_SVOL_LEVERAGE_BSWC,1>;
 using DynMat    = Eigen::Matrix  <double, Eigen::Dynamic, Eigen::Dynamic>;
 using func      = std::function  <const DynMat(const svec&, const cvec&)>;
-using BasePF    = BSFilterWC     <nparts_SVOL_LEVERAGE_BSWC, dimstate_SVOL_LEVERAGE_BSWC, dimobs_SVOL_LEVERAGE_BSWC, dimcov_SVOL_LEVERAGE_BSWC, resampT, double>;
+using BasePF    = BSFilterWC     <nparts_SVOL_LEVERAGE_BSWC, dimstate_SVOL_LEVERAGE_BSWC, dimobs_SVOL_LEVERAGE_BSWC, dimcov_SVOL_LEVERAGE_BSWC, resampT, double, true>;
 
 
 /**

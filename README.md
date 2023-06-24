@@ -16,8 +16,12 @@ devtools::install_github("tbrown122387/pfr")
 Pick your particle filter, generate C++ code templates using one of the following, then fill in the rest:
 
 ```
+pfr::createSISRFilterTemplate("my_model")
 pfr::createAuxiliaryFilterTemplate("my_model")
+pfr::createBootstrapFilterTemplate("my_model")
 pfr::createBootstrapFilterWithCovTemplate("my_model")
+pfr::createRBPFHmmTemplate("my_model")
+pfr::createRBPFKalmanTemplate("my_model")
 ```
 
 Doubting your C++ skills? Check out the full examples [here](src/) or watch this live demonstration:
