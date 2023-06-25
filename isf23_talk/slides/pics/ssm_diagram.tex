@@ -1,0 +1,50 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, shapes}
+
+\usepackage{Sweave}
+\begin{document}
+\input{ssm_diagram-concordance}
+
+
+\tikzset{rectangle state/.style={draw,rectangle}} % make rectangles available
+\begin{tikzpicture}
+  \node[state, minimum size=1.5cm] (y1) {$y_{1}$};
+  \node[rectangle state,minimum size=1.5cm] (x1) [below= of y1] {$x_{1}$};
+  \node[state,minimum size=1.5cm] (z1) [below= of x1] {$z_{1}$};
+  \node[state, minimum size=1.5cm] (y2) [right= of y1] {$y_{2}$};
+  \node[rectangle state, minimum size=1.5cm] (x2) [right= of x1] {$x_{2}$};
+  \node[state, minimum size=1.5cm] (z2) [right= of z1] {$z_{2}$};
+  \node[state, draw=none, minimum size=1.5cm] (ydots) [right= of y2] {$\cdots$};
+  \node[state, draw=none, minimum size=1.5cm] (xdots) [right= of x2] {$\cdots$};
+  \node[state, draw=none, minimum size=1.5cm] (zdots) [right= of z2] {$\cdots$};
+  \node[state, minimum size=1.5cm] (yTm1) [right= of ydots] {$y_{T-1}$};
+  \node[rectangle state, minimum size=1.5cm] (xTm1) [below= of yTm1] {$x_{T-1}$};
+  \node[state, minimum size=1.5cm] (zTm1) [below= of xTm1] {$z_{T-1}$};
+  \node[state, minimum size=1.5cm] (yT) [right= of yTm1] {$y_{T}$};
+  \node[rectangle state, minimum size=1.5cm] (xT) [below= of yT] {$x_{T}$};
+  \node[state, minimum size=1.5cm] (zT) [below= of xT] {$z_{T}$};
+  \draw[->] 
+    (x1) edge [ left] (y1) 
+    (z1) edge[bend left, dashed] (x1)
+    (z1) edge[bend left, dashed] (y1)
+    (x2) edge[left] (y2)
+    (z2) edge[bend left, dashed] (x2)
+    (z2) edge[bend left, dashed] (y2)
+    (xTm1) edge[left] (yTm1)
+    (zTm1) edge[bend left, dashed] (xTm1)
+    (zTm1) edge[bend left, dashed] (yTm1)
+    (zT) edge[bend left, dashed] (xT)
+    (zT) edge[bend left, dashed] (yT)
+    (xT) edge[left] (yT)
+    (x1) edge[left] (x2)
+    (x2) edge[left] (xdots)
+    (xdots) edge[left] (xTm1)
+    (xTm1) edge[left] (xT)
+    ;
+\end{tikzpicture}
+
+
+
+\end{document}
