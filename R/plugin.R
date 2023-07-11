@@ -7,21 +7,14 @@ inc_path_fun <- function(package) {
 }
 
 
-# # Using RcppEigen
-eigen_path_fun <- function() {
-  system.file('include', package = 'RcppEigen')
-}
-
 PKG_CPPFLAGS_env_fun <- function() {
 
-  paste(' -I"', file.path(inc_path_fun("Rcpp"), '" '),
-        ' -I"', file.path(eigen_path_fun(), '" '),
-        ' -I"', file.path(eigen_path_fun(), 'unsupported" '),
+  paste(' -I"', file.path(inc_path_fun("pfr"), '" '),
+        ' -I"', file.path(inc_path_fun("Rcpp"), '" '),
+        ' -I"', file.path(inc_path_fun("RcppEigen"), '" '),
+        # ' -I"', file.path(inc_path_fun("RcppEigen"), 'unsupported" '),
         ' -DEIGEN_NO_DEBUG ',
         ' -DDROPPINGTHISINRPACKAGE ',
-        # ' -include ', shQuote(Eigen), ' ',
-        # ifelse (.Platform$OS.type == "windows", ' -std=c++1y',
-        #         ' -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1 '),
         sep = '')
 }
 
@@ -52,12 +45,12 @@ pfrplugin <- function() {
   
   if (.Platform$OS.type == "windows") {
     list(includes = '// [[Rcpp::plugins(cpp14)]]\n',
-         body = function(x) x,
+         body = function(x) sprintf("BEGIN_RCPP\n%s\nEND_RCPP", x),
          env = list(PKG_CPPFLAGS = paste(Rcpp_plugin$env$PKG_CPPFLAGS,
                                          PKG_CPPFLAGS_env_fun(), collapse = " ")))
   } else {
     list(includes = '// [[Rcpp::plugins(cpp14)]]\n',
-         body = function(x) x,
+         body = function(x) sprintf("BEGIN_RCPP\n%s\nEND_RCPP", x),
          env = list(PKG_CPPFLAGS = paste(Rcpp_plugin$env$PKG_CPPFLAGS,
                                          PKG_CPPFLAGS_env_fun(), collapse = " ")))
   }
@@ -72,4 +65,8 @@ inlineCxxPlugin <- function(...) {
   settings <- pfrplugin()
   settings
 }
+
+
+
+
 
