@@ -1,3 +1,0 @@
-[submodule "src/pf"]
-	path = inst/pf
-	url = https://github.com/tbrown122387/pf.git
