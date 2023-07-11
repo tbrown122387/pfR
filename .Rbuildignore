@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^isf23_talk
+^src/pf/CITATION.cff
+^LICENSE\.md$
+^src/pf/.git
+^src/pf/.github
