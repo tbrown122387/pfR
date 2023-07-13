@@ -4,10 +4,10 @@ cpptemp_bsfilter_header <-
 #ifndef HEADERGUARDMODNAME_H
 #define HEADERGUARDMODNAME_H
 
-#include "pf/include/pf/bootstrap_filter.h"                 // the bootstrap particle filter
-#include "pf/include/pf/rv_samp.h" 			                    // for sampling random numbers
-#include "pf/include/pf/rv_eval.h" 			                    // for evaluating densities and pmfs
-#include "pf/include/pf/resamplers.h" 		                  // for resampling classes
+#include "pf/bootstrap_filter.h"                 // the bootstrap particle filter
+#include "pf/rv_samp.h" 			   // for sampling random numbers
+#include "pf/rv_eval.h" 			   // for evaluating densities and pmfs
+#include "pf/resamplers.h" 		           // for resampling classes
 
 using namespace pf;
 using namespace pf::filters;

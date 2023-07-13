@@ -1,13 +1,6 @@
 cpptemp_rbpfkalman_export <- 
 r"(// replace every instance of <TODO> with your own code! 
 
-#include "filenameMODNAME.h" 
-
-//' @useDynLib pfr, .registration = TRUE
-//' @import RcppEigen
-//' @importFrom Rcpp evalCpp
-//' @export
-// [[Rcpp::export]]
 double modname_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params){
 
   // instantiate model with arg params
@@ -25,11 +18,6 @@ double modname_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVe
 }
 
 
-//' @useDynLib pfr, .registration = TRUE
-//' @import RcppEigen
-//' @importFrom Rcpp evalCpp
-//' @export
-// [[Rcpp::export]]
 Rcpp::NumericVector modname_approx_filt(
     const Rcpp::NumericVector& obsTS,
     const Rcpp::NumericVector& params){

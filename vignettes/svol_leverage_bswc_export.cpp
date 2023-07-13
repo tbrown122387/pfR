@@ -1,14 +1,7 @@
-# in addition to everything in the header and source for the model, we need:
-#- modname_approx_LL
-#- modname_approx_filt
-
-cpptemp_bswc_export <- 
-r"(// replace every instance of <TODO> with your own code! 
-
-double modname_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params){
+double svol_leverage_bswc_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVector& params){
 
   // instantiate model with arg params
-  classMODNAME mod(<TODO>);
+  Svol_leverageBSWC mod(params[0],params[1],params[2],params[3]);
 
   // calculate likelihood by iterating through time series
   double ans(0.0);
@@ -21,13 +14,12 @@ double modname_approx_LL(const Rcpp::NumericVector& obsTS, const Rcpp::NumericVe
   return ans;
 }
 
-
-Rcpp::NumericVector modname_approx_filt(
+Rcpp::NumericVector svol_leverage_bswc_approx_filt(
     const Rcpp::NumericVector& obsTS,
     const Rcpp::NumericVector& params){
-  
+
   // instantiate model with arg params
-  classMODNAME mod(<TODO>);
+  Svol_leverageBSWC mod(params[0],params[1],params[2],params[3]);
 
   // instantiate container for filter means
   Rcpp::NumericVector ans(obsTS.size() - 1);
@@ -45,5 +37,4 @@ Rcpp::NumericVector modname_approx_filt(
   }
   return ans;
 }
-)"
 

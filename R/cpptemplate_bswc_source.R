@@ -1,7 +1,6 @@
 cpptemp_bswc_source <-
 '// replace every instance of <TODO> with your own code! 
 
-#include "filenameMODNAME.h" 
 
 classMODNAME::classMODNAME(<TODO>)
 {

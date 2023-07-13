@@ -1,0 +1,167 @@
+---
+title: "Getting Started with pfR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(pfr)
+#knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+
+
+## The Big Picture
+
+In `pf`, the `c++` library, each model/algorithm pair gets its own class. Writing this class's methods defines a time series model, and the base class you choose to inherit from selects the particle filter that will be used. This typically requires writing two files: a `c++` header file that declares the class, and a `c++` source file that implements all the model specifics. 
+
+In `pfR`, the `R` package, there is one extra step. In addition to the header and source file, there is some additional `c++` code that helps you to use everything from within an R session. 
+
+The beauty of this is that `pf` files are usable in `pfR`, and the majority of `pfR` code is usable in a `c++` program. The downside to this is that R programmers will need a passing familiarity with `c++`--fortunately most of the `c++` code is boilerplate, and `pfR` has a function that will write most of it for you. 
+
+
+## Examples:
+
+Before we do any specific example, we'll have to define a state space model, and choose some notation. 
+
+For $t =1, \ldots, T$, let $\{y_t\}$ be your observed time series, $\{x_t\}$ be some set of hidden states, and (optional) $\{z_t\}$ be a sequence of inputs you have at your disposal to help better predict each $y_t$. 
+
+Defining a state-space model requires defining three kinds of distributions: 
+
+ - $g(y_t \mid x_t, z_t, \theta)$ the observation distributions,
+ - $f(x_t \mid x_{t-1}, z_t, \theta)$ the state transition distributions, and 
+ - $\mu(x_t \mid z_t, \theta)$ an initial state distribution.
+
+
+In the diagram below, circle nodes correspond with observed variables, square nodes represent hidden/latent variables, and arrows demonstrate how conditional dependence relationships (the dotted lines convey that they are optional).
+
+```{r, out.width="100%", echo=F}
+knitr::include_graphics("ssm_diagram_1-1.png")
+```
+
+
+### Example 1: Univariate Stochastic Volatility with Leverage
+
+
+Here's a state space model from TODO that can help us understand univariate financial returns data $y_1, y_1, y_2, \ldots$. 
+
+$$
+\begin{gather*}
+y_t = \exp(x_t/2)\epsilon_t, \hspace{10mm} t = 1, \ldots, T \\
+  x_{t+1} = \mu + \phi(x_t - \mu) + \eta_t, \hspace{10mm} t = 1, \ldots, T-1 \\
+x_1 \sim \mathcal{N}(\mu, \sigma^2 / (1-\phi^2)) \\
+\begin{bmatrix}
+\epsilon_t \\
+\eta_t
+\end{bmatrix}
+\sim 
+\mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma})
+\end{gather*}
+$$
+
+$\mathcal{N}(\cdot, \cdot)$ denotes a (possibly multivariate) Gaussian distribution, $-1 < \rho < 1$ is the leverage parameter (typically  negative for equities), and 
+
+$$
+\boldsymbol{\Sigma} = \begin{bmatrix}1  & \rho\sigma \\ \rho\sigma & \sigma^2 \end{bmatrix}.
+$$
+  
+The interpretation of $x_t$ is the (logarithm of )the volatility of the returns. Unfortunately, the above model definition does not quite match our definition of a state space model. Fortunately, one can rewrite the state transition density in the form we require if we let the covariate be the lagged return, (i.e. $z_t = y_{t-1}$), and using a property of multivariate Gaussian vectors. It turns out
+
+<!-- $$ -->
+<!-- \begin{bmatrix} -->
+<!-- x_{t+1} \\ -->
+<!-- y_t -->
+<!-- \end{bmatrix} -->
+<!-- \mid -->
+<!-- x_t -->
+<!-- \sim -->
+<!-- \mathcal{N} -->
+<!-- \left( -->
+<!-- \begin{bmatrix} -->
+<!-- \mu + \phi(x_t - \mu)\\ -->
+<!-- 0 -->
+<!-- \end{bmatrix}, -->
+<!-- \begin{bmatrix} -->
+<!-- \sigma^2 & \exp[x_t/2]\rho\sigma^2 \\ -->
+<!-- \exp[x_t/2]\rho\sigma^2 & \exp[x_t] -->
+<!-- \end{bmatrix} -->
+<!-- \right) -->
+<!-- $$ -->
+<!-- means -->
+
+
+
+$f(x_t \mid x_{t-1}, z_t, \theta)$ is univariate normal with mean $\mu + \phi(x_t - \mu) + \rho\sigma y_{t-1}\exp[-x_t/2]$ and  variance $\sigma^2(1 - \rho^2)$.
+
+
+### Defining the model
+
+Running the following bit of code will do most of the work for you, writing the required c++ code. It will save three files to your desktop--`svol_leverage_bswc.h`, `svol_leverage_bswc.cpp`, and `svol_leverage_bswc_export.cpp`--and then open them in an RStudio session. 
+
+```{r, eval = FALSE}
+library(pfr)
+reatePFCPPTemplates("svol_leverage", "BSWC", fileDir = "./")
+```
+
+The algorithm we will use is a bootstrap filter with covariates. Even though most of the code is automatically generated, you will notice some `TODO`s in the code. Here you will specify the details for the specific model of interest. After you are finished, the `c++` files should like this, this and this TODO.
+
+### Compiling The Model
+
+To compile the model, simply run
+
+
+```{r}
+svol_lev <- buildModelFuncs(".", "svol_leverage")
+```
+
+`svol_lev` is an object of `"pfrmodel"`. If you want to save this compiled object to make it reusable, pass in `save=TRUE` to `buildModelFuncs()`. This will save the compiled model object as a serialized object in the same directory you're working in, with a filename suffix of  `_pfrmodel.rds` It can be read in later with
+
+
+```{r, eval = FALSE}
+svol_lev <- readRDS("svol_leverage_pfrmodel.rds")
+```
+
+Once you have your compiled model object, you can unpack and use its functions. The function-storing object is an `Rcpp` Module. 
+
+```{r}
+svol_lev_funcs <- unPackFunctions(svol_lev)
+svol_lev_funcs$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
+svol_lev_funcs$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
+```
+
+
+
+
+### Example 2: Factor Multivariate Stochastic Volatility Model
+
+
+Here's another state space model (TODO cite) that can handle multivariate returns data $\mathbf{y}_1, \mathbf{y}_2, \ldots$. 
+
+$$
+\begin{gather*}
+\mathbf{y}_t = \mathbf{B} \mathbf{f}_t + \mathbf{V}_t^{1/2} \boldsymbol{\epsilon}_t, \hspace{10mm} \boldsymbol{\epsilon}_t \sim \mathcal{N}_p(\boldsymbol{0}, \mathbf{I}) \\
+\mathbf{f}_t =  \mathbf{D}_t^{1/2} \boldsymbol{\gamma}_t, \hspace{10mm} \boldsymbol{\gamma}_t \sim \mathcal{N}_q(\boldsymbol{0}, \mathbf{I}) \\
+\mathbf{x}_{t+1} = \boldsymbol{\mu} + \boldsymbol{\Phi} (\mathbf{x}_{t} - \boldsymbol{\mu}) + \boldsymbol{\eta}_t,  \hspace{10mm} \boldsymbol{\eta}_t \sim \mathcal{N}_{p+q}(\boldsymbol{0}, \boldsymbol{\Sigma} ) \\\\
+\mathbf{x}_1 \sim \mathcal{N}(\boldsymbol{\mu},  \text{diag}(\sigma^2_1/(1-\phi_1^2), \ldots, \sigma^2_{p+q}/(1-\phi_{p+q}^2)  ) ) \\
+\end{gather*}
+$$
+
+where
+$$
+\begin{gather*}
+\mathbf{V}_t = \text{diag}[\exp(x_{1,t}), \ldots, \exp(x_{p,t}) ], \\
+\mathbf{D}_t = \text{diag}[\exp(x_{p+1,t}), \ldots, \exp(x_{p+q,t}) ], \\
+\boldsymbol{\Phi} = \text{diag}(\phi_1, \ldots, \phi_{p+q}), \\
+\boldsymbol{\Sigma} = \text{diag}(\sigma^2_1, \ldots, \sigma^2_{p+q}) ,
+\end{gather*}
+$$
+
+$p$ is the number of observations, and $q$ is the number of factors.
+

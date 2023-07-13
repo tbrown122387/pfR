@@ -1,13 +1,25 @@
 Package: pfr
 Type: Package
-Title: pfR is the R interface to pf.
+Title: pfR is the R interface to pf
 Version: 1.0
 Date: 2023-02-26
 Author: Taylor R. Brown
 Maintainer: Taylor R. Brown <trb5me@virginia.edu>
 Description: Builds and runs c++ code for a model/algorithm pair.
 License: GPL (>= 3)
-Imports: Rcpp (>= 1.0.10), RcppEigen
-LinkingTo: Rcpp, RcppEigen
+Imports: 
+    cxxfunplus (>= 1.0.1),
+    inline (>= 0.3.19),
+    methods (>= 4.2.1),
+    Rcpp (>= 1.0.11),
+    rstudioapi (>= 0.13)
 RoxygenNote: 7.2.1
 Encoding: UTF-8
+Suggests: 
+    knitr (>= 1.43),
+    rmarkdown (>= 2.23)
+VignetteBuilder: knitr
+Remotes: 
+    eddelbuettel/inline,
+    maverickg/cxxfunplus,
+    rstudio/rstudioapi

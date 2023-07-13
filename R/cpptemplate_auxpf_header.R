@@ -1,18 +1,13 @@
-#HEADERGUARDMODNAME_H
-#MODNAME
-#classMODNAME
-
-
 cpptemp_auxpf_header <- 
 '// replace every instance of <TODO> with your own code! 
 
 #ifndef HEADERGUARDMODNAME_H
 #define HEADERGUARDMODNAME_H
 
-#include "pf/include/pf/auxiliary_pf.h"     // the auxiliary particle filter
-#include "pf/include/pf/rv_samp.h"          // for sampling random numbers
-#include "pf/include/pf/rv_eval.h"          // for evaluating densities and pmfs
-#include "pf/include/pf/resamplers.h"       // for resampling classes
+#include "pf/auxiliary_pf.h"     // the auxiliary particle filter
+#include "pf/rv_samp.h"          // for sampling random numbers
+#include "pf/rv_eval.h"          // for evaluating densities and pmfs
+#include "pf/resamplers.h"       // for resampling classes
 
 using namespace pf;
 using namespace pf::filters;

@@ -1,5 +1,6 @@
 ##
 ## Define pfr plugin for inline package.
+## this code is adapted from rstan's plugin
 ##
 
 inc_path_fun <- function(package) {
@@ -39,7 +40,7 @@ pfrplugin <- function() {
   rcpp_pkg_path2 <- legitimate_space_in_path(rcpp_pkg_path)
   
   # If rcpp_PKG_LIBS contains space without preceding '\\', add `\\';
-  # otherwise keept it intact
+  # otherwise keep it intact
   if (grepl('[^\\\\]\\s', rcpp_pkg_libs, perl = TRUE))
     rcpp_pkg_libs <- gsub(rcpp_pkg_path, rcpp_pkg_path2, rcpp_pkg_libs, fixed = TRUE)
   
@@ -58,9 +59,6 @@ pfrplugin <- function() {
 
 
 # inlineCxxPlugin would automatically get registered in inline's plugin list.
-# Note that everytime pfr plugin is used, inlineCxxPlugin
-# gets called so we can change some settings on the fly
-# for example now by setting (TODO rstan_options(boost_lib=xxx))
 inlineCxxPlugin <- function(...) {
   settings <- pfrplugin()
   settings

@@ -13,37 +13,37 @@ devtools::install_github("tbrown122387/pfr")
 
 ## Step 2: Auto-generate code
 
-Pick your particle filter, generate C++ code templates using one of the following, then fill in the rest:
+Pick your particle filter, generate most of the required `c++` code, then fill in the rest. For example, 
 
 ```
-pfr::createSISRFilterTemplate("my_model")
-pfr::createAuxiliaryFilterTemplate("my_model")
-pfr::createBootstrapFilterTemplate("my_model")
-pfr::createBootstrapFilterWithCovTemplate("my_model")
-pfr::createRBPFHmmTemplate("my_model")
-pfr::createRBPFKalmanTemplate("my_model")
+library(pfr)
+createPFCPPTemplates("svol_leverage", "BSWC", fileDir = "~/Desktop/")
 ```
 
-Doubting your C++ skills? Check out the full examples [here](src/) or watch this live demonstration:
-
-https://github.com/tbrown122387/pfR/assets/1740324/99447477-5ca1-4e1e-9dba-7417133aa932
-
+Saves three files to your desktop: `svol_leverage_bswc.h`, `svol_leverage_bswc.cpp`, and `svol_leverage_bswc_export.cpp`. After you're finished filling in the details, they should look like TODO.
 
 ## Step 3: Compile and Load
 
-Recompile your C++ code by hitting <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> or typing
+Compile the `c++` code with 
 
 ```
-devtools::load_all(".")
+svol_lev <- buildModelFuncs("~/Desktop", "svol_leverage")
+```
+
+or load a previously-compiled object with 
+
+```
+svol_lev <- readRDS("~/Desktop/svol_leverage_pfrmodel.rds")
 ```
 
 ## Step 4: Run
 
-Run your approximate log-likelihood and/or filtering functions by typing something like 
+Unpack your model's functions as an `Rcpp` Module object, and call them
 
 ```
-pfr::my_model_bswc_approx_filt(myData, myParams)
-pfr::my_model_bswc_approx_LL(myData, myParams)
+svol_lev_funcs <- unPackFunctions(svol_lev)
+svol_lev_funcs$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
+svol_lev_funcs$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
 ```
 
-The name of these functions will depend on what you named your model/algorithm.
+
