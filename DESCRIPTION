@@ -19,7 +19,3 @@ Suggests:
     knitr (>= 1.43),
     rmarkdown (>= 2.23)
 VignetteBuilder: knitr
-Remotes: 
-    eddelbuettel/inline,
-    maverickg/cxxfunplus,
-    rstudio/rstudioapi

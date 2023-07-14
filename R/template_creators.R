@@ -23,7 +23,7 @@ createPFCPPTemplates <- function(modname, pfAlgo, fileDir = ".", openNow = TRUE)
   # check arguments
   validName <- nchar(modname) > 0 & !grepl("[^a-z_]", modname)
   validPath <- ifelse(is.null(fileDir), TRUE, dir.exists(fileDir))
-  validAlgo <- pfAlgo %in% c("BSWC", "APF","BSF","SISR","RBPFHMM", "RBPFKALMAN")
+  validAlgo <- pfAlgo %in% algoTypes
   stopifnot(validName)
   stopifnot(validPath)
   stopifnot(validAlgo)
@@ -31,10 +31,10 @@ createPFCPPTemplates <- function(modname, pfAlgo, fileDir = ".", openNow = TRUE)
   # create names to swap into templates
   headerGuardName <- paste0(toupper(modname), "_", pfAlgo, "_H")
   capsName <- paste0("_", toupper(modname), "_", pfAlgo)
-  className <- paste0(toupper(substr(modname, 1, 1)), 
-                      substr(modname, 2, nchar(modname)),
-                      pfAlgo)
   lowerAlgoAbbrev <- tolower(pfAlgo)
+  className <- paste0(toupper(substr(modname, 1, 1)), 
+                      substr(modname, 2, nchar(modname)), "_",
+                      lowerAlgoAbbrev)
   headerFilename <- paste0(modname, "_", lowerAlgoAbbrev, ".h")
   sourceFilename <- paste0(modname, "_", lowerAlgoAbbrev, ".cpp")
   exportFilename <- paste0(modname, "_", lowerAlgoAbbrev, "_export.cpp")
@@ -108,6 +108,7 @@ createPFCPPTemplates <- function(modname, pfAlgo, fileDir = ".", openNow = TRUE)
   headerFilePath <- file.path(fileDir, headerFilename)
   sourceFilePath <- file.path(fileDir, sourceFilename)
   exportCodeFilePath <- file.path(fileDir, exportFilename)
+  
   if ( any(file.exists(c(headerFilePath, sourceFilePath, exportCodeFilePath))) ){
     stop("C++ code for this model already exists.")
   }  
@@ -152,4 +153,6 @@ createPFCPPTemplates <- function(modname, pfAlgo, fileDir = ".", openNow = TRUE)
 }
 
 
+
+algoTypes <- c("BSWC", "APF","BSF","SISR","RBPFHMM", "RBPFKALMAN")
 
