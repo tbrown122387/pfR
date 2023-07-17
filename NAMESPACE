@@ -2,5 +2,3 @@
 
 export(buildModelFuncs)
 export(createPFCPPTemplates)
-export(unPackFunctions)
-importClassesFrom(cxxfunplus,cxxdso)

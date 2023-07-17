@@ -14,8 +14,8 @@
 
 #include <cmath>
 
-#include "pf_base.h"
-#include "rv_samp.h" // for k_generator
+#include "pf/pf_base.h"
+#include "pf/rv_samp.h" // for k_generator
 
 
 namespace pf {
@@ -188,7 +188,7 @@ void APF<nparts, dimx, dimy, resamp_t, float_t, debug>::filter(const osv &data, 
     
     if(m_now > 0)
     { 
-        
+       
         // set up "first stage weights" to make k index sampler 
         arrayfloat_t logFirstStageUnNormWeights = m_logUnNormWeights;
         arrayVec oldPartics = m_particles;
@@ -298,6 +298,7 @@ void APF<nparts, dimx, dimy, resamp_t, float_t, debug>::filter(const osv &data, 
         m_now += 1; 
     
     } else { // (m_now == 0) 
+
 
         float_t max(-std::numeric_limits<float_t>::infinity());
         for(size_t ii = 0; ii < nparts; ++ii)

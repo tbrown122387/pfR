@@ -51,7 +51,7 @@ knitr::include_graphics("ssm_diagram_1-1.png")
 ### Example 1: Univariate Stochastic Volatility with Leverage
 
 
-Here's a state space model @harvey_shephard @Yu that can help us understand univariate financial returns data $y_1, y_1, y_2, \ldots$. 
+Here's a state space model from @harvey_shephard @Yu that can help us understand a segment of univariate financial returns data $y_1, \ldots y_T$.
 
 $$
 \begin{gather*}
@@ -73,7 +73,12 @@ $$
 \boldsymbol{\Sigma} = \begin{bmatrix}1  & \rho\sigma \\ \rho\sigma & \sigma^2 \end{bmatrix}.
 $$
   
-The interpretation of $x_t$ is the (logarithm of )the volatility of the returns. Unfortunately, the above model definition does not quite match our definition of a state space model. Fortunately, one can rewrite the state transition density in the form we require if we let the covariate be the lagged return, (i.e. $z_t = y_{t-1}$), and using a property of multivariate Gaussian vectors. It turns out
+The interpretation of $x_t$ is the (logarithm of) the volatility of the returns and our covariate will be $z_t = y_{t-1}$. Writing this model in our notation yields
+
+ - $g(y_t \mid x_t, z_t, \theta) = \mathcal{N}(0, \exp[x_t])$, 
+ - $f(x_t \mid x_{t-1}, z_t, \theta) = \mathcal{N}(\mu + \phi(x_t - \mu) + \rho\sigma y_{t-1}\exp(-x_t/2), \sigma^2(1 - \rho^2))$, and
+ - $\mu(x_t \mid z_t, \theta) = \mathcal{N}(\mu, \sigma^2 / (1-\phi^2))$ .
+
 
 <!-- $$ -->
 <!-- \begin{bmatrix} -->
@@ -101,12 +106,9 @@ The interpretation of $x_t$ is the (logarithm of )the volatility of the returns.
 
 $f(x_t \mid x_{t-1}, z_t, \theta)$ is univariate normal with mean $\mu + \phi(x_t - \mu) + \rho\sigma y_{t-1}\exp[-x_t/2]$ and  variance $\sigma^2(1 - \rho^2)$.
 
+### Coding It Up
 
-### Defining the model
-
-The algorithm we want is a bootstrap filter with covariates. Even though most of the code will be automatically generated, you will notice some `TODO`s in files we will generate. Here you will specify the details of the model and the algorithm. 
-
-Here is the bit of code that will do most of the work for you. The first argument is the prefix for all of your filenames and will be used throughout the rest of your work. 
+Suppose that the algorithm we want is a bootstrap filter with covariates. Our next step is writing all the c++ code for this model and this algorithm. Here is the bit of code that will do most of the work for you. The first argument is the prefix for all of your filenames and will be used throughout the rest of your work. 
 
 
 ```{r, eval = FALSE}
@@ -114,40 +116,34 @@ library(pfr)
 createPFCPPTemplates("svol_leverage", "BSWC", fileDir = "./")
 ```
 
-This will save three files to your desktop--`svol_leverage_bswc.h`, `svol_leverage_bswc.cpp`, and `svol_leverage_bswc_export.cpp`--and then open them in an RStudio session. After you are finished editing them, they should like [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc.h), [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc.cpp), and [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc_export.cpp).
+This will save three files to your desktop--`svol_leverage_bswc.h`, `svol_leverage_bswc.cpp`, and `svol_leverage_bswc_export.cpp`--and then open them in an RStudio session. You will notice some `TODO`s in the files. Consider these as requests for you to fill in the details of your model.
+
+After you are finished editing them, they should like something like [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc.h), [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc.cpp), and [this](https://github.com/tbrown122387/pfR/blob/main/vignettes/svol_leverage_bswc_export.cpp).
 
 
-### Compiling The Model
+### Compiling The Code
 
-To compile the model, simply run
+To compile the code you just wrote, simply run
 
 
-```{r}
+```{r,eval = FALSE}
 svol_lev <- buildModelFuncs(".", "svol_leverage")
 ```
 
-`svol_lev` is an object of `"pfrmodel"`. If you want to save this compiled object to make it reusable, pass in `save=TRUE` to `buildModelFuncs()`. This will save the compiled model object as a serialized object in the same directory you're working in, with a filename suffix of  `_pfrmodel.rds` It can be read in later with
+`svol_lev` is an Rcpp Module @rcpp object that holds all the functions that allow you to use your model. You can call these functions like this: 
 
-
-```{r, eval = FALSE}
-svol_lev <- readRDS("svol_leverage_pfrmodel.rds")
-```
-
-Once you have your compiled model object, you can unpack and use its functions. The function-storing object is an `Rcpp` Module. 
-
-```{r}
-svol_lev_funcs <- unPackFunctions(svol_lev)
-svol_lev_funcs$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
-svol_lev_funcs$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
+```{r,eval = FALSE}
+svol_lev$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
+svol_lev$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
 ```
 
 
 
 
-### Example 2: Factor Multivariate Stochastic Volatility Model
+### Example 2: A Factor Multivariate Stochastic Volatility Model
 
 
-Here's another state space model @multiv_stochvol that can handle multivariate returns data $\mathbf{y}_1, \mathbf{y}_2, \ldots$. 
+Here's another state space model from @multiv_stochvol that can handle multivariate returns data $\mathbf{y}_1, \mathbf{y}_2, \ldots$. 
 
 $$
 \begin{gather*}
@@ -170,29 +166,28 @@ $$
 
 $p$ is the number of observations, and $q$ is the number of factors.
 
-The c++ files for this model using an auxiliary particle filter TODO cite are generated with 
+Suppose you want to use an auxiliary particle filter @apf for this model. The c++ file templates are generated with 
 
 ```{r, eval = FALSE}
 createPFCPPTemplates("mean_factor_msvol", "APF", fileDir = "./")
 ```
 
+The finished files look like the ones location [here](https://github.com/tbrown122387/pfR/blob/main/vignettes/mean_factor_msvol_apf.cpp), [here](https://github.com/tbrown122387/pfR/blob/main/vignettes/mean_factor_msvol_apf.h) and [here](https://github.com/tbrown122387/pfR/blob/main/vignettes/mean_factor_msvol_apf_export.cpp). That code is compiled with
 
-```{r, eval = FALSE}
+```{r}
 fsvol <- buildModelFuncs(".", "mean_factor_msvol")
 ```
 
+and the (approximate) log-likelihood and filtering functions are run with
 
-
-```{r, eval = FALSE}
-fsv_funcs <- unPackFunctions(fsvol)
-# param order: B, mu, Phi, Sigma
-estParam <- c(1.22, 
-              -1.17, -.01, .08,
-              .85, 84, .81,
-              3.7, 3.4, 3.49)
+```{r}
+paramEst <- c(1.22, #B
+              -1.17, -.01, .08, #mu
+              .85, .84, .81, #Phi
+              3.7, 3.4, 3.49) #Sigma
 fakeData <- matrix(rnorm(200), ncol=2)
-fsv_funcs$mean_factor_msvol_apf_approx_LL(fakeData, estParam)
-fsv_funcs$mean_factor_msvol_apf_approx_filt(fakeData, estParam)
+fsvol$mean_factor_msvol_apf_approx_LL(fakeData, paramEst)
+fsvol$mean_factor_msvol_apf_approx_filt(fakeData, paramEst)
 ```
 
 

@@ -2,31 +2,29 @@
 % Please edit documentation in R/compile.R
 \name{buildModelFuncs}
 \alias{buildModelFuncs}
-\title{Build c++ particle filtering code for your R session, and save it as a 
-pfrmodel object.}
+\title{Build c++ particle filtering code for your R session.}
 \usage{
-buildModelFuncs(myDir, model_name, save = TRUE)
+buildModelFuncs(myDir, modelName, verbose = FALSE)
 }
 \arguments{
 \item{myDir}{directory with your three code files (i.e. model header, model source and export code)}
 
-\item{model_name}{your model name. Must be in all lowercase, and be a substring of the above-mentioned filenames}
+\item{modelName}{your model name. Must be in all lowercase, and be a substring of the above-mentioned filenames}
 
-\item{save}{if TRUE, then save the compiled object (file name suffix is " _pfrmodel.rds")}
+\item{verbose}{logical and passed in to inline::cxxfunction()}
 }
 \value{
-a pfrmodel object
+an Rcpp Module object
 }
 \description{
-Build c++ particle filtering code for your R session, and save it as a 
-pfrmodel object.
+Build c++ particle filtering code for your R session.
 }
 \examples{
 \dontrun{
 # compile everything from scratch
 svol_lev <- buildModelFuncs("~/Desktop", "svol_leverage", save = TRUE)
 
-# ...or load a previously-compiled pfrmodel object
+# or load a previously-compiled pfrmodel object
 svol_lev <- readRDS("~/Desktop/svol_leverage_pfrmodel.rds")
 
 # then use your model's log-likelihood and filtering functions
