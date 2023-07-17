@@ -6,13 +6,12 @@ Mean_factor_msvol_apf::Mean_factor_msvol_apf(const param_vec& params)
 {
 
   m_initVar = (m_Sigma.diagonal().array()/ (1.0 - m_Phi.diagonal().array().square())).matrix().asDiagonal();
-  
+
   // set up time 1 sampler
   m_timeOneSampler.setCovar(m_initVar);
-  
+
   // set up transition sampler
-  m_timeOneSampler.setCovar(m_Sigma);
-  
+  m_transitionSampler.setCovar(m_Sigma);
 }
 
 
@@ -59,7 +58,6 @@ auto Mean_factor_msvol_apf::getSigma(const param_vec& theta) -> stateMat
 
 double Mean_factor_msvol_apf::logMuEv (const svec &x1 )
 {
-  // all sigma^2/(1-phi^2)
   return rveval::evalMultivNorm<dimstate_MEAN_FACTOR_MSVOL_APF, double>(x1,
                                                                         svec::Zero(),
                                                                         m_initVar,
@@ -88,7 +86,7 @@ auto Mean_factor_msvol_apf::fSamp(const svec &xtm1) -> svec
 
 double Mean_factor_msvol_apf::logQ1Ev (const svec &x1, const ovec &y1)
 {
-  return rveval::evalMultivNorm<dimstate_MEAN_FACTOR_MSVOL_APF,double>(x1,
+    return rveval::evalMultivNorm<dimstate_MEAN_FACTOR_MSVOL_APF,double>(x1,
                                                                        svec::Zero(),
                                                                        m_initVar,
                                                                        true);
