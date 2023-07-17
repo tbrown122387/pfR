@@ -12,6 +12,7 @@ Imports:
     methods,
     Rcpp (>= 1.0.11),
     rstudioapi (>= 0.13)
+LinkingTo: RcppEigen
 RoxygenNote: 7.2.1
 Encoding: UTF-8
 Suggests: 
