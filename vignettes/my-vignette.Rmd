@@ -3,7 +3,7 @@ title: "Getting Started with pfR"
 output: rmarkdown::html_vignette
 bibliography: REFERENCES.bib
 vignette: >
-  %\VignetteIndexEntry{my-vignette}
+  %\VignetteIndexEntry{Getting Started with pfR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(pfr)
+#removed ths from yaml header:
+#bibliography: REFERENCES.bib
+# requires pandoc-citeproc, btu no way to make user download that
 #knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 

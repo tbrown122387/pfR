@@ -6,12 +6,16 @@
 #ifdef DROPPINGTHISINRPACKAGE
     #include <RcppEigen.h>
     // [[Rcpp::depends(RcppEigen)]]
+    
+    // [[Rcpp::depends(BH)]]
+    #include <boost/math/special_functions.hpp>
+
 #else
     #include <Eigen/Dense>
+    #include "boost/math/special_functions.hpp"
 #endif
 
 #include <iostream> // cerr
-#include "boost/math/special_functions.hpp"
 
 
 namespace pf {

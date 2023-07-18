@@ -1,12 +1,13 @@
 Package: pfr
 Type: Package
-Title: Interface to the C++ Library pf
+Title: Interface to the C++ Library Pf
 Version: 1.0.0
 Author: Taylor R. Brown
 Maintainer: Taylor R. Brown <trb5me@virginia.edu>
 Description: Builds and runs c++ code for classes that encapsulate state space model, particle filtering algorithm pairs.
 License: GPL (>= 3)
 Imports: 
+    BH,
     inline (>= 0.3.19),
     methods,
     Rcpp (>= 1.0.11),
@@ -15,7 +16,7 @@ Imports:
 LinkingTo: RcppEigen
 RoxygenNote: 7.2.1
 Encoding: UTF-8
-Suggests: 
-    knitr (>= 1.43),
+Suggests:
+    knitr (>= 1.39),
     rmarkdown (>= 2.23)
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
