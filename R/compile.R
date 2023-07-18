@@ -46,7 +46,10 @@ buildModelFuncs <- function(myDir, modelName, verbose = FALSE){
                       replacement = modelName, 
                       x = module_code)
   module_code <- gsub("%algo_name%", algoName, module_code)
-  inc <- paste(header_code, source_code, export_code, module_code, sep = "\n")
+  inc <- paste(header_code, 
+               source_code, 
+               export_code, 
+               module_code, sep = "\n")
   
   ### compile c++ code and return (and maybe save) bundled object
   fx <- inline::cxxfunction(methods::signature(), 

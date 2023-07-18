@@ -28,7 +28,7 @@ In `pfR`, the R package, there is one extra step. In addition to the header and 
 The beauty of this is that `pf` files are usable in `pfR`, and the majority of `pfR` code is usable in a c++ program. The downside to this is that R programmers will need a passing familiarity with c++--fortunately most of the c++ code is boilerplate, and `pfR` has a function that will write most of it for you. 
 
 
-## Examples:
+## Examples
 
 Before we do any specific example, we'll have to define a state space model, and choose some notation. 
 
@@ -185,9 +185,10 @@ paramEst <- c(1.22, #B
               -1.17, -.01, .08, #mu
               .85, .84, .81, #Phi
               3.7, 3.4, 3.49) #Sigma
-fakeData <- matrix(rnorm(200), ncol=2)
+fakeData <- matrix(rnorm(50), ncol=2)
 fsvol$mean_factor_msvol_apf_approx_LL(fakeData, paramEst)
 fsvol$mean_factor_msvol_apf_approx_filt(fakeData, paramEst)
 ```
 
 
+## References

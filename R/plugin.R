@@ -45,12 +45,16 @@ pfrplugin <- function() {
     rcpp_pkg_libs <- gsub(rcpp_pkg_path, rcpp_pkg_path2, rcpp_pkg_libs, fixed = TRUE)
   
   if (.Platform$OS.type == "windows") {
-    list(includes = '// [[Rcpp::plugins(cpp14)]]\n',
+    list(includes = paste('// [[Rcpp::plugins(cpp14)]]\n',
+                          '// [[Rcpp::depends(BH)]]\n',
+                          '// [[Rcpp::plugins(RcppEigen)]]\n', sep = ""),
          body = function(x) sprintf("BEGIN_RCPP\n%s\nEND_RCPP", x),
          env = list(PKG_CPPFLAGS = paste(Rcpp_plugin$env$PKG_CPPFLAGS,
                                          PKG_CPPFLAGS_env_fun(), collapse = " ")))
   } else {
-    list(includes = '// [[Rcpp::plugins(cpp14)]]\n',
+    list(includes = paste('// [[Rcpp::plugins(cpp14)]]\n',
+                          '// [[Rcpp::depends(BH)]]\n',
+                          '// [[Rcpp::plugins(RcppEigen)]]\n', sep = ""),
          body = function(x) sprintf("BEGIN_RCPP\n%s\nEND_RCPP", x),
          env = list(PKG_CPPFLAGS = paste(Rcpp_plugin$env$PKG_CPPFLAGS,
                                          PKG_CPPFLAGS_env_fun(), collapse = " ")))

@@ -1,16 +1,16 @@
 Package: pfr
 Type: Package
-Title: pfR is the R Interface to pf
+Title: Interface to the C++ Library pf
 Version: 1.0.0
-Date: 2023-07-17
 Author: Taylor R. Brown
 Maintainer: Taylor R. Brown <trb5me@virginia.edu>
-Description: Builds and runs c++ code for classes that encapsulate state space model/ particle filtering algorithm pairs.
+Description: Builds and runs c++ code for classes that encapsulate state space model, particle filtering algorithm pairs.
 License: GPL (>= 3)
 Imports: 
     inline (>= 0.3.19),
     methods,
     Rcpp (>= 1.0.11),
+    RcppEigen,
     rstudioapi (>= 0.13)
 LinkingTo: RcppEigen
 RoxygenNote: 7.2.1
