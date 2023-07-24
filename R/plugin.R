@@ -13,6 +13,7 @@ PKG_CPPFLAGS_env_fun <- function() {
   paste(' -I"', file.path(inc_path_fun("pfr"), '" '),
         ' -I"', file.path(inc_path_fun("Rcpp"), '" '),
         ' -I"', file.path(inc_path_fun("RcppEigen"), '" '),
+        ' -I"', file.path(inc_path_fun("BH"), '" '),
         # ' -I"', file.path(inc_path_fun("RcppEigen"), 'unsupported" '),
         ' -DEIGEN_NO_DEBUG ',
         ' -DDROPPINGTHISINRPACKAGE ',

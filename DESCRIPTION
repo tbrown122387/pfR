@@ -7,16 +7,15 @@ Maintainer: Taylor R. Brown <trb5me@virginia.edu>
 Description: Builds and runs c++ code for classes that encapsulate state space model, particle filtering algorithm pairs.
 License: GPL (>= 3)
 Imports: 
-    BH,
     inline (>= 0.3.19),
     methods,
-    Rcpp (>= 1.0.11),
-    RcppEigen,
     rstudioapi (>= 0.13)
-LinkingTo: RcppEigen
 RoxygenNote: 7.2.1
 Encoding: UTF-8
 Suggests:
+    BH,
+    Rcpp (>= 1.0.11),
+    RcppEigen,
     knitr (>= 1.39),
     rmarkdown (>= 2.23)
 VignetteBuilder: knitr, rmarkdown
