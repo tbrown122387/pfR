@@ -6,7 +6,7 @@
 auxiliary particle filters, sequential importance sampling with resampling 
 filters, or Rao-Blackwellized/Marginal particle filters.}
 \usage{
-createPFCPPTemplates(modname, pfAlgo, fileDir = ".", openNow = TRUE)
+createPFCPPTemplates(modname, pfAlgo, fileDir, openNow = TRUE)
 }
 \arguments{
 \item{modname}{name of model in all lowercase}
@@ -26,10 +26,10 @@ auxiliary particle filters, sequential importance sampling with resampling
 filters, or Rao-Blackwellized/Marginal particle filters.
 }
 \examples{
-\dontrun{
 # return in list of character strings
 createPFCPPTemplates("coolmod", "BSF", fileDir = NULL)
 
+\dontrun{
 # save three files to Desktop, and
 # begin editing them in rstudio IDE
 createPFCPPTemplates("coolmod", "BSF", fileDir = "~/Desktop/")

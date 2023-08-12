@@ -9,16 +9,16 @@
 #' @return NULL if saving files, otherwise a list with three character vectors 
 #' 
 #' @examples
-#' \dontrun{
 #' # return in list of character strings
 #' createPFCPPTemplates("coolmod", "BSF", fileDir = NULL)
 #' 
+#' \dontrun{
 #' # save three files to Desktop, and
 #' # begin editing them in rstudio IDE
 #' createPFCPPTemplates("coolmod", "BSF", fileDir = "~/Desktop/")
 #' }
 #' @export
-createPFCPPTemplates <- function(modname, pfAlgo, fileDir = ".", openNow = TRUE){
+createPFCPPTemplates <- function(modname, pfAlgo, fileDir, openNow = TRUE){
   
   # check arguments
   validName <- nchar(modname) > 0 & !grepl("[^a-z_]", modname)

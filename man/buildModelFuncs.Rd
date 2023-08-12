@@ -22,14 +22,10 @@ Build c++ particle filtering code for your R session.
 \examples{
 \dontrun{
 # compile everything from scratch
-svol_lev <- buildModelFuncs("~/Desktop", "svol_leverage", save = TRUE)
-
-# or load a previously-compiled pfrmodel object
-svol_lev <- readRDS("~/Desktop/svol_leverage_pfrmodel.rds")
+svol_lev <- buildModelFuncs("~/Desktop", "svol_leverage")
 
 # then use your model's log-likelihood and filtering functions
-svol_lev_funcs <- unPackFunctions(svol_lev)
-svol_lev_funcs$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
-svol_lev_funcs$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
+svol_lev$svol_leverage_bswc_approx_LL(rnorm(100), c(.9, 0.0, 1.0, -.2))
+svol_lev$svol_leverage_bswc_approx_filt(rnorm(100), c(.9, 0.0, 1.0, -.2))
 }
 }

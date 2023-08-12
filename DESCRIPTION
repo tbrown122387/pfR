@@ -1,4 +1,4 @@
-Package: 'pfr'
+Package: pfr
 Type: Package
 Title: Interface to the 'C++' Library 'Pf'
 Version: 1.0.0
